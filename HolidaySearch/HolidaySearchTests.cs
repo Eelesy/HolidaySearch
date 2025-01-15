@@ -74,6 +74,7 @@ namespace HolidaySearch
             Assert.AreEqual("First Class Air", flightOne.Airline);
             Assert.AreEqual("MAN", flightOne.From);
             Assert.AreEqual("TFS", flightOne.To);
+            Assert.AreEqual(470, flightOne.Price);
             Assert.AreEqual("01/07/2023", flightOne.Departure_Date.ToShortDateString());
         }
 
@@ -236,6 +237,20 @@ namespace HolidaySearch
             Assert.AreEqual(4, dateFormatTwo.Count());
             Assert.AreEqual(4, dateFormatThree.Count());
         }
-    }
 
+        //now we can merge the two and return holidays and flights
+        //start with a holidays and flights that match and return the first occurence
+        // assert the terms not search are what we expect
+        [TestMethod]
+        public void ShouldFindHolidayAndFlightForSearchTerms()
+        {
+            var foundHolidayAndFlight = hs.HolidayAndFlightSearcher("MAN", "PMI", "15/06/2023", 10);
+            var holiday = foundHolidayAndFlight.Item1;
+            var flight = foundHolidayAndFlight.Item2;
+            Assert.AreEqual("Sol Katmandu Park & Resort", holiday.Name);
+            Assert.AreEqual(60, holiday.Price_Per_Night);
+            Assert.AreEqual("Trans American Airlines", flight.Airline);
+            Assert.AreEqual(170, flight.Price);
+        }
+    }
 }

@@ -118,6 +118,14 @@ namespace HolidaySearch
             return holidaysTo.Intersect(holidaysOn).Intersect(holidaysFor).ToList();
         }
 
+        public (HolidayData, FlightData) HolidayAndFlightSearcher(string from, string to, string date, int duration)
+        {
+            //destination and date are where the two intersect
+            var foundHolidays = HolidaySearcher(to, date, duration);
+            var foundFlights = FlightSearch(from, to, date);
+            return (foundHolidays[0], foundFlights[0] );   
+        }
+
         private static string ConvertLocationToAirportCode(string location)
         {
             switch (location)
