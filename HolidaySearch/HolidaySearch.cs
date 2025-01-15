@@ -72,7 +72,9 @@ namespace HolidaySearch
 
         public List<FlightData> GetFlightsOnDepartureDate(string searchTerm)
         {
-            return Flights.Where(x => x.Departure_Date.ToShortDateString() == searchTerm).ToList();
+            DateTime dt = DateTime.Parse(searchTerm);
+            string formatted = dt.ToString("yyyy'-'MM'-'dd");
+            return Flights.Where(x => x.Departure_Date.ToString("yyyy'-'MM'-'dd") == formatted).ToList();
         }
 
         public List<FlightData> FlightSearch(string from, string to, string dateTime)
@@ -97,7 +99,9 @@ namespace HolidaySearch
 
         public List<HolidayData> GetHolidayOnDate(string searchTerm)
         {
-            return Holidays.Where(x => x.Arrival_Date.ToShortDateString() == searchTerm).ToList();
+            DateTime dt = DateTime.Parse(searchTerm);
+            string formatted = dt.ToString("yyyy'-'MM'-'dd");
+            return Holidays.Where(x => x.Arrival_Date.ToString("yyyy'-'MM'-'dd") == formatted).ToList();
         }
 
         public List<HolidayData> GetHolidayForDuration(int duration)

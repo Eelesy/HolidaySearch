@@ -205,7 +205,6 @@ namespace HolidaySearch
         //before merging the two searches together, looking at the spec there can be some ambiguity in search terms - we can search airport without code, and an Any search term for depature
         // date format also needs to be handled
         //as this is a limited set, create some quick conversions to bake in this ambuiguity
-
         [TestMethod]
         public void ShouldHandleSearchingForPlaceNameForFlights()
         {
@@ -225,6 +224,17 @@ namespace HolidaySearch
         {
             var londonFlights = hs.FlightSearch("Any London Airport", "Mallorca Airport", "15/06/2023");
             Assert.AreEqual(2,  londonFlights.Count());
+        }
+
+        [TestMethod]
+        public void ShouldHandleDifferentDateFormatsForSearch()
+        {
+            var dateFormatOne = hs.GetFlightsOnDepartureDate("2023/06/15");
+            var dateFormatTwo = hs.GetHolidayOnDate("15/06/2023");
+            var dateFormatThree = hs.GetFlightsOnDepartureDate("15-06-2023");
+            Assert.AreEqual(4, dateFormatOne.Count());
+            Assert.AreEqual(4, dateFormatTwo.Count());
+            Assert.AreEqual(4, dateFormatThree.Count());
         }
     }
 
