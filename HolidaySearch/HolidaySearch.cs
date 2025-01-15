@@ -45,12 +45,29 @@ namespace HolidaySearch
 
         public List<FlightData> GetFlightsFrom(string searchTerm)
         {
-            return Flights.Where(x => x.From == searchTerm).ToList();
+            var splitTerm = searchTerm.Split(" ");
+            //split the term, if any either return all or the two london, else specific airport
+            if (splitTerm[0] == "Any")
+            {
+                if(splitTerm.Length == 2)
+                {
+                    return Flights.ToList();
+                }
+                else
+                {
+                    return Flights.Where(x => x.From == "LTN" || x.From == "LGW").ToList();
+                }
+            }
+            else
+            {
+                return Flights.Where(x => x.From == ConvertLocationToAirportCode(splitTerm[0])).ToList();
+            }            
         }
 
         public List<FlightData> GetFlightsTo(string searchTerm)
         {
-            return Flights.Where(x => x.To == searchTerm).ToList();
+            var splitTerm = searchTerm.Split(" ");
+            return Flights.Where(x => x.To == ConvertLocationToAirportCode(splitTerm[0])).ToList();
         }
 
         public List<FlightData> GetFlightsOnDepartureDate(string searchTerm)
@@ -74,7 +91,8 @@ namespace HolidaySearch
 
         public List<HolidayData> GetHolidayToAirport(string searchTerm)
         {
-            return Holidays.Where(x => x.Local_Airports.Contains(searchTerm)).ToList();
+            var splitTerm = searchTerm.Split(" ");
+            return Holidays.Where(x => x.Local_Airports.Contains(ConvertLocationToAirportCode(splitTerm[0]))).ToList();
         }
 
         public List<HolidayData> GetHolidayOnDate(string searchTerm)
@@ -94,6 +112,33 @@ namespace HolidaySearch
             var holidaysFor = GetHolidayForDuration(duration);
 
             return holidaysTo.Intersect(holidaysOn).Intersect(holidaysFor).ToList();
+        }
+
+        private static string ConvertLocationToAirportCode(string location)
+        {
+            switch (location)
+            {
+                case "Manchester":
+                case "MAN":
+                    return "MAN";
+                case "Malaga":
+                case "AGP":
+                    return "AGP";
+                case "London Heathrow":
+                case "LTN":
+                    return "LTN";
+                case "London Gatwick":
+                case "LGW":
+                    return "LGW";
+                case "Mallorca":
+                case "PMI":
+                    return "PMI";
+                case "Gran":
+                case "LPA":
+                    return "LPA";
+                default:
+                    return location;
+            }
         }
 
     }

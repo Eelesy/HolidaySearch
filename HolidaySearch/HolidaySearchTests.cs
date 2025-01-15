@@ -201,6 +201,31 @@ namespace HolidaySearch
             var foundHolidays = hs.HolidaySearcher("WILMSLOW", "01/01/2025", 10);
             Assert.AreEqual(0, foundHolidays.Count());
         }
+
+        //before merging the two searches together, looking at the spec there can be some ambiguity in search terms - we can search airport without code, and an Any search term for depature
+        // date format also needs to be handled
+        //as this is a limited set, create some quick conversions to bake in this ambuiguity
+
+        [TestMethod]
+        public void ShouldHandleSearchingForPlaceNameForFlights()
+        {
+            var manchesterFlights = hs.GetFlightsFrom("Manchester Airport");
+            var malagaFlights = hs.GetFlightsTo("Malaga Airport");
+            var londonFlights = hs.GetFlightsFrom("Any London Airport");
+            var anyFlight = hs.GetFlightsFrom("Any Airport");
+
+            Assert.AreEqual(8, manchesterFlights.Count());
+            Assert.AreEqual(5, malagaFlights.Count());
+            Assert.AreEqual(4, londonFlights.Count());
+            Assert.AreEqual(12, anyFlight.Count());
+        }
+
+        [TestMethod]
+        public void ShouldHandleAnySearchInFlightSearcher()
+        {
+            var londonFlights = hs.FlightSearch("Any London Airport", "Mallorca Airport", "15/06/2023");
+            Assert.AreEqual(2,  londonFlights.Count());
+        }
     }
 
 }
