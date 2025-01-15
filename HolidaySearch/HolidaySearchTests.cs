@@ -152,5 +152,41 @@ namespace HolidaySearch
             var flightsFound = hs.FlightSearch("LEEK", "WILMSLOW", "15/01/2024");
             Assert.AreEqual(0, flightsFound.Count());
         }
+
+        //three search terms for the holidays, airport to, date and duration
+        //combined test and negative tests
+        [TestMethod]
+        public void ShouldReturnHolidayToAirport()
+        {
+            var foundHoliday = hs.GetHolidayToAirport("PMI");
+            Assert.AreEqual(4, foundHoliday.Count());
+        }
+
+        [TestMethod]
+        public void ShouldReturnHolidayOnDate()
+        {
+            var foundHoliday = hs.GetHolidayOnDate("10/10/2022");
+            Assert.AreEqual(1, foundHoliday.Count());
+        }
+
+        [TestMethod]
+        public void ShouldReturnHolidayForDuration()
+        {
+            var foundHoliday = hs.GetHolidayForDuration(7);
+            Assert.AreEqual(5, foundHoliday.Count());
+        }
+
+        // negative test
+        [TestMethod]
+        public void ShouldReturnEmptyListForNoHolidaysWithSearchTerm()
+        {
+            var holidayTo = hs.GetHolidayToAirport("WILMSLOW");
+            var holidayOn = hs.GetHolidayOnDate("15/01/2025");
+            var holidayDuration = hs.GetHolidayForDuration(1);
+            Assert.AreEqual(0, holidayTo.Count());
+            Assert.AreEqual(0, holidayOn.Count());
+            Assert.AreEqual(0, holidayDuration.Count());
+        }
     }
+
 }
