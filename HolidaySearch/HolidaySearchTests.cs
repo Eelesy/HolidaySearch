@@ -264,23 +264,16 @@ namespace HolidaySearch
 
         //return 'best' holiday!
         [TestMethod]
-        public void ShouldFindBestHolidayAndFlightByPrice()
+        [DataRow("Manchester Airport(MAN)", "Malaga Airport(AGP)", "2023/07/01", 7, 9, 2)]
+        [DataRow("Any London Airport", "Mallorca Airport(PMI)", "2023/06/15", 10, 5, 6)]
+        [DataRow("Any Airport", "Gran Canaria Airport(LPA)", "2022/11/10", 14, 6, 7)]
+        public void ShouldFindBestHolidayAndFlightByPrice(string fromQ, string toQ, string date, int nights, int expectedHolidayId, int expectedFlightId)
         {
-            var result = hs.HolidayAndFlightSearcher("Manchester Airport(MAN)", "Malaga Airport(AGP)", "2023/07/01", 7);
-            var result2 = hs.HolidayAndFlightSearcher("Any London Airport", "Mallorca Airport(PMI)", "2023/06/15", 10);
-            var result3 = hs.HolidayAndFlightSearcher("Any Airport", "Gran Canaria Airport (LPA)", "2022/11/10", 14);
+            var result = hs.HolidayAndFlightSearcher(fromQ, toQ, date, nights);
             var holiday = result.holiday;
             var flight = result.flight;
-            var holiday2 = result2.holiday;
-            var flight2 = result2.flight;
-            var holiday3 = result3.holiday;
-            var flight3 = result3.flight;
-            Assert.AreEqual(9, holiday.Id);
-            Assert.AreEqual(2, flight.Id);
-            Assert.AreEqual(5, holiday2.Id);
-            Assert.AreEqual(6, flight2.Id);
-            Assert.AreEqual(6, holiday3.Id);
-            Assert.AreEqual(7, flight3.Id);
+            Assert.AreEqual(expectedHolidayId, holiday.Id);
+            Assert.AreEqual(expectedFlightId, flight.Id);
         }
     }
 }
