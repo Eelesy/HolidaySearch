@@ -50,29 +50,26 @@ namespace HolidaySearch
     [TestClass]
     public class HolidaySearchTests
     {
+        HolidaySearch hs = new HolidaySearch();
         /// Test to show data conversion for flight is working as expected
         [TestMethod]
         public void ShouldGetAListOf12Flights()
         {
-            HolidaySearch hs = new HolidaySearch();
-            Assert.AreEqual(hs.Flights.Count, 12);
+            Assert.AreEqual(hs.FlightCount(), 12);
         }
 
         /// test to show data conversion for holidays is working
         [TestMethod]
         public void ShouldGetAListOf13Holidays()
         {
-            HolidaySearch hs = new HolidaySearch();
-            Assert.AreEqual(hs.Holidays.Count, 13);
+            Assert.AreEqual(hs.HolidayCount(), 13);
         }
-
 
         /// tests to validate model data is correct, and not empty (1 case tried for brevity)
         [TestMethod]
         public void ShouldContainCorrectFlightDetailsForFlightOne()
         {
-            HolidaySearch hs = new HolidaySearch();
-            var flightOne = hs.Flights[0];
+            var flightOne = hs.GetFlightDataWithId(1);
             Assert.AreEqual(flightOne.Id, 1);
             Assert.AreEqual(flightOne.Airline, "First Class Air");
             Assert.AreEqual(flightOne.From, "MAN");
@@ -83,16 +80,29 @@ namespace HolidaySearch
         [TestMethod]
         public void ShouldContainCorrectHolidayDetailsForHolidayOne()
         {
-
-            HolidaySearch hs = new HolidaySearch();
-            var holidayOne = hs.Holidays[0];
+            var holidayOne = hs.GetHolidayDataWithId(1);
             Assert.AreEqual (holidayOne.Id, 1);
             Assert.AreEqual(holidayOne.Name, "Iberostar Grand Portals Nous");
             Assert.AreEqual(holidayOne.Arrival_Date.ToShortDateString(), "05/11/2022");
             Assert.AreEqual(holidayOne.Price_Per_Night, 100.0);
             Assert.AreEqual(holidayOne.Local_Airports[0], "TFS");
             Assert.AreEqual(holidayOne.Nights, 7);
-
         }
+
+        /// Tests to check that null is returned for a bad id
+        [TestMethod]
+        public void ShouldReturnNullWhenFlightIdAboveCount()
+        {
+            var flight = hs.GetFlightDataWithId(13);
+            Assert.IsNull (flight);
+        }
+
+        [TestMethod]
+        public void ShouldReturnNullWhenHolidayIdAbove()
+        {
+            var holiday = hs.GetHolidayDataWithId(14);
+            Assert.IsNull (holiday);    
+        }
+
     }
 }
