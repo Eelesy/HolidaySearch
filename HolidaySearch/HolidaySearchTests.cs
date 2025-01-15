@@ -57,5 +57,12 @@ namespace HolidaySearch
             HolidaySearch hs = new HolidaySearch();
             Assert.AreEqual(hs.Flights.Count, 12);
         }
+
+        [TestMethod]
+        public void ShouldGetAListOf13Holidays()
+        {
+            HolidaySearch hs = new HolidaySearch();
+            Assert.AreEqual(hs.Holidays.Count, 13);
+        }
     }
 }

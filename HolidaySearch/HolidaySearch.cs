@@ -10,7 +10,8 @@ namespace HolidaySearch
 {
     internal class HolidaySearch
     {
-        public List<FlightData> Flights = new List<FlightData>(); 
+        public List<FlightData> Flights = new List<FlightData>();
+        public List<HolidayData> Holidays = new List<HolidayData>();
 
         public HolidaySearch()
         {
@@ -18,6 +19,12 @@ namespace HolidaySearch
             {
                 string json = r.ReadToEnd();
                 Flights = JsonConvert.DeserializeObject<List<FlightData>>(json);
+            }
+
+            using (StreamReader r = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"wwwroot\data\holidays.json"))
+            {
+                string json = r.ReadToEnd();
+                Holidays = JsonConvert.DeserializeObject<List<HolidayData>>(json);
             }
         }
     }
