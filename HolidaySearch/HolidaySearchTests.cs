@@ -55,14 +55,14 @@ namespace HolidaySearch
         [TestMethod]
         public void ShouldGetAListOf12Flights()
         {
-            Assert.AreEqual(hs.FlightCount(), 12);
+            Assert.AreEqual(12, hs.FlightCount());
         }
 
         /// test to show data conversion for holidays is working
         [TestMethod]
         public void ShouldGetAListOf13Holidays()
         {
-            Assert.AreEqual(hs.HolidayCount(), 13);
+            Assert.AreEqual(13, hs.HolidayCount());
         }
 
         /// tests to validate model data is correct, and not empty (1 case tried for brevity)
@@ -70,23 +70,23 @@ namespace HolidaySearch
         public void ShouldContainCorrectFlightDetailsForFlightOne()
         {
             var flightOne = hs.GetFlightDataWithId(1);
-            Assert.AreEqual(flightOne.Id, 1);
-            Assert.AreEqual(flightOne.Airline, "First Class Air");
-            Assert.AreEqual(flightOne.From, "MAN");
-            Assert.AreEqual(flightOne.To, "TFS");
-            Assert.AreEqual(flightOne.Departure_Date.ToShortDateString(), "01/07/2023");
+            Assert.AreEqual(1, flightOne.Id);
+            Assert.AreEqual("First Class Air", flightOne.Airline);
+            Assert.AreEqual("MAN", flightOne.From);
+            Assert.AreEqual("TFS", flightOne.To);
+            Assert.AreEqual("01/07/2023", flightOne.Departure_Date.ToShortDateString());
         }
 
         [TestMethod]
         public void ShouldContainCorrectHolidayDetailsForHolidayOne()
         {
             var holidayOne = hs.GetHolidayDataWithId(1);
-            Assert.AreEqual (holidayOne.Id, 1);
-            Assert.AreEqual(holidayOne.Name, "Iberostar Grand Portals Nous");
-            Assert.AreEqual(holidayOne.Arrival_Date.ToShortDateString(), "05/11/2022");
-            Assert.AreEqual(holidayOne.Price_Per_Night, 100.0);
-            Assert.AreEqual(holidayOne.Local_Airports[0], "TFS");
-            Assert.AreEqual(holidayOne.Nights, 7);
+            Assert.AreEqual(1, holidayOne.Id);
+            Assert.AreEqual("Iberostar Grand Portals Nous", holidayOne.Name);
+            Assert.AreEqual("05/11/2022", holidayOne.Arrival_Date.ToShortDateString());
+            Assert.AreEqual(100.00, holidayOne.Price_Per_Night);
+            Assert.AreEqual("TFS", holidayOne.Local_Airports[0]);
+            Assert.AreEqual(7, holidayOne.Nights);
         }
 
         /// Tests to check that null is returned for a bad id
@@ -97,12 +97,35 @@ namespace HolidaySearch
             Assert.IsNull (flight);
         }
 
+        ///Test to search for flight by from, to and date
         [TestMethod]
         public void ShouldReturnNullWhenHolidayIdAbove()
         {
             var holiday = hs.GetHolidayDataWithId(14);
             Assert.IsNull (holiday);    
         }
+
+        [TestMethod]
+        public void ShouldReturnFlightsFromADestination()
+        {
+            var foundFlight = hs.GetFlightsFrom("MAN");
+            Assert.AreEqual(8, foundFlight.Count());
+        }
+
+        [TestMethod]
+        public void ShouldReturnFlightsToADestination()
+        {
+            var foundFlight = hs.GetFlightsTo("TFS");
+            Assert.AreEqual(1, foundFlight.Count());
+        }
+
+        [TestMethod]
+        public void ShouldReturnFlightsOnADepatureDate()
+        {
+            var foundFlight = hs.GetFlightsOnDepartureDate("01/07/2023");
+            Assert.AreEqual(4, foundFlight.Count);
+        }
+
 
     }
 }

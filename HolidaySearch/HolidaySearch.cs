@@ -43,9 +43,25 @@ namespace HolidaySearch
             return Flights.FirstOrDefault(x => x.Id == id);
         }
 
+        public List<FlightData> GetFlightsFrom(string searchTerm)
+        {
+            return Flights.Where(x => x.From == searchTerm).ToList();
+        }
+
+        public List<FlightData> GetFlightsTo(string searchTerm)
+        {
+            return Flights.Where(x => x.To == searchTerm).ToList();
+        }
+
+        public List<FlightData> GetFlightsOnDepartureDate(string searchTerm)
+        {
+            return Flights.Where(x => x.Departure_Date.ToShortDateString() == searchTerm).ToList();
+        }
+
         public HolidayData GetHolidayDataWithId(int id)
         {
             return Holidays.FirstOrDefault(x => x.Id == id);
         }
+
     }
 }
