@@ -187,6 +187,20 @@ namespace HolidaySearch
             Assert.AreEqual(0, holidayOn.Count());
             Assert.AreEqual(0, holidayDuration.Count());
         }
+
+        [TestMethod]
+        public void ShouldReturnHolidaysForMultipleTerms()
+        {
+            var foundHolidays = hs.HolidaySearcher("TFS", "05/11/2022", 7);
+            Assert.AreEqual(2, foundHolidays.Count());
+        }
+
+        [TestMethod]
+        public void ShouldReturnEmptyListForNoHolidays()
+        {
+            var foundHolidays = hs.HolidaySearcher("WILMSLOW", "01/01/2025", 10);
+            Assert.AreEqual(0, foundHolidays.Count());
+        }
     }
 
 }

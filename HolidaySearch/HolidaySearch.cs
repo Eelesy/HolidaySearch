@@ -87,5 +87,14 @@ namespace HolidaySearch
             return Holidays.Where(x => x.Nights == duration).ToList();
         }
 
+        public List<HolidayData> HolidaySearcher(string to, string date, int duration)
+        {
+            var holidaysTo = GetHolidayToAirport(to);
+            var holidaysOn = GetHolidayOnDate(date);
+            var holidaysFor = GetHolidayForDuration(duration);
+
+            return holidaysTo.Intersect(holidaysOn).Intersect(holidaysFor).ToList();
+        }
+
     }
 }
