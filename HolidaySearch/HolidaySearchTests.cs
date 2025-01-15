@@ -1,56 +1,13 @@
-﻿using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace HolidaySearch
+﻿namespace HolidaySearch
 {
-
-    // spec - create a holiday search class
-    //    var holidaySearch = new HolidaySearch({
-    // DepartingFrom: 'MAN',
-    // TravelingTo: 'AGP',
-    // DepartureDate: '2023/07/01'
-    //Duration: 7
-    // });
-    //holidaySearch.Results.First() # Returns the Best of the matching results
-    // holidaySearch.Results.First().TotalPrice # '£900.00'
-    // holidaySearch.Results.First().Flight.Id # 4
-    // holidaySearch.Results.First().Flight.DepartingFrom # 'MAN'
-    // holidaySearch.Results.First().Flight.TravalingTo # 'AGP'
-    // holidaySearch.Results.First().Flight.Price
-    // holidaySearch.Results.First().Hotel.Id # 3
-    // holidaySearch.Results.First().Hotel.Name
-    // holidaySearch.Results.First().Hotel.Price
-    // Test cases
-    // Here are some example test cases
-    // #### Customer #1
-    // ##### Input
-    // * Departing from: Manchester Airport(MAN)
-    // *Traveling to: Malaga Airport(AGP)
-    // *Departure Date: 2023 / 07 / 01
-    // * Duration: 7 nights
-    //##### Expected result
-    // * Flight 2 and Hotel 9
-    // ### Customer #2
-    // ##### Input
-    //* Departing from: Any London Airport
-    // * Traveling to: Mallorca Airport(PMI)
-    // *Departure Date: 2023 / 06 / 15
-    // * Duration: 10 nights
-    //##### Expected result
-    // * Flight 6 and Hotel 5
-    // ### Customer #3
-    // ##### Input
-    // * Departing from: Any Airport
-    // * Traveling to: Gran Canaria Airport (LPA)
-    // * Departure Date: 2022 / 11 / 10
-    // * Duration: 14 nights
-    //##### Expected result
-    // * Flight 7 and Hotel 6
+    // Below are the tests in order as i attempted the task, I hope they and my commits tell a story
+    // I followed the red, green, refactor pattern of TDD for the tests but found this obscure to show in the commits, but have tried to show my thinking where possible!
 
     [TestClass]
     public class HolidaySearchTests
     {
         HolidaySearch hs = new HolidaySearch();
+
         /// Test to show data conversion for flight is working as expected
         [TestMethod]
         public void ShouldGetAListOf12Flights()
@@ -204,7 +161,7 @@ namespace HolidaySearch
         }
 
         //before merging the two searches together, looking at the spec there can be some ambiguity in search terms - we can search airport without code, and an Any search term for depature
-        // date format also needs to be handled
+        //date format also needs to be handled
         //as this is a limited set, create some quick conversions to bake in this ambuiguity
         [TestMethod]
         public void ShouldHandleSearchingForPlaceNameForFlights()
@@ -240,7 +197,7 @@ namespace HolidaySearch
 
         //now we can merge the two and return holidays and flights
         //start with a holidays and flights that match and return the first occurence
-        // assert the terms not search are what we expect
+        //assert the terms not search are what we expect
         [TestMethod]
         public void ShouldFindHolidayAndFlightForSearchTerms()
         {
@@ -276,6 +233,7 @@ namespace HolidaySearch
             Assert.AreEqual(expectedFlightId, flight.Id);
         }
 
+        //negative test for combined search
         [TestMethod]
         public void ShouldReturnEmptyListIfNoHolidayFound()
         {

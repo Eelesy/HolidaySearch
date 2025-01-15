@@ -1,10 +1,5 @@
 ﻿using HolidaySearch.Models;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HolidaySearch
 {
@@ -28,6 +23,8 @@ namespace HolidaySearch
             }
         }
 
+        #region data accessors
+
         public int FlightCount()
         {
             return Flights.Count();
@@ -37,6 +34,10 @@ namespace HolidaySearch
         {
             return Holidays.Count();
         }
+
+        #endregion
+
+        #region flight search
 
         public FlightData GetFlightDataWithId(int id)
         {
@@ -86,6 +87,10 @@ namespace HolidaySearch
             return flightsFromAndTo.Intersect(flightsOn).ToList();
         }
 
+        #endregion
+
+        #region holiday search
+
         public HolidayData GetHolidayDataWithId(int id)
         {
             return Holidays.FirstOrDefault(x => x.Id == id);
@@ -118,6 +123,8 @@ namespace HolidaySearch
             return holidaysTo.Intersect(holidaysOn).Intersect(holidaysFor).ToList();
         }
 
+        #endregion
+
         public Result HolidayAndFlightSearcher(string from, string to, string date, int duration, bool findBest = true)
         {
             //destination and date are where the two intersect
@@ -134,7 +141,6 @@ namespace HolidaySearch
                     var r = new Result { holiday = holiday, flight = flight, TotalPrice = total };
                     results.Add(r);
                 }
-            
             }
 
             if(results.Count > 0)
