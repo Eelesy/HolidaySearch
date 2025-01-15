@@ -58,6 +58,11 @@ namespace HolidaySearch
             return Flights.Where(x => x.Departure_Date.ToShortDateString() == searchTerm).ToList();
         }
 
+        public List<FlightData> FlightSearch(string from, string to, string dateTime)
+        {
+            return Flights.Where(x => x.From == from && x.To == to && x.Departure_Date.ToShortDateString() == dateTime).ToList();
+        }
+
         public HolidayData GetHolidayDataWithId(int id)
         {
             return Holidays.FirstOrDefault(x => x.Id == id);

@@ -138,5 +138,19 @@ namespace HolidaySearch
             Assert.AreEqual(0, flightOn.Count());
         }
 
+        // combine the three search terms into one flight function (leave previous methods for thought process)
+        [TestMethod]
+        public void ShouldReturnFlightsForThreeSearchTerms()
+        {
+            var flightsFound = hs.FlightSearch("MAN", "TFS", "01/07/2023");
+            Assert.AreEqual(1, flightsFound.Count());
+        }
+
+        [TestMethod]
+        public void ShouldGetEmptyListForNoFlight()
+        {
+            var flightsFound = hs.FlightSearch("LEEK", "WILMSLOW", "15/01/2024");
+            Assert.AreEqual(0, flightsFound.Count());
+        }
     }
 }
