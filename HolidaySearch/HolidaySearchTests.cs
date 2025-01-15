@@ -252,5 +252,14 @@ namespace HolidaySearch
             Assert.AreEqual("Trans American Airlines", flight.Airline);
             Assert.AreEqual(170, flight.Price);
         }
+
+        //calculate total price of the holiday
+        [TestMethod]
+        public void ShouldFindResultAndCalculateTotalPrice()
+        {
+            var foundHolidayAndFlight = hs.HolidayAndFlightSearcher("MAN", "PMI", "15/06/2023", 10);
+            var price = foundHolidayAndFlight.TotalPrice;
+            Assert.AreEqual(770.0, price);
+        }
     }
 }

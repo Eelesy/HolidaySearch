@@ -123,7 +123,19 @@ namespace HolidaySearch
             //destination and date are where the two intersect
             var foundHolidays = HolidaySearcher(to, date, duration);
             var foundFlights = FlightSearch(from, to, date);
-            return new Result { holiday = foundHolidays[0], flight = foundFlights[0], TotalPrice = 0.0 }; 
+            var results = new List<Result>();
+
+            foreach(var holiday in foundHolidays)
+            {
+                var priceOfHoliday = holiday.Price_Per_Night * duration;
+                foreach (var flight in foundFlights)
+                {
+                    var total = priceOfHoliday + flight.Price;
+                    var r = new Result { holiday = holiday, flight = flight, TotalPrice = total };
+                    results.Add(r);
+                }
+            }
+            return results[0];
         }
 
         private static string ConvertLocationToAirportCode(string location)
