@@ -118,7 +118,7 @@ namespace HolidaySearch
             return holidaysTo.Intersect(holidaysOn).Intersect(holidaysFor).ToList();
         }
 
-        public Result HolidayAndFlightSearcher(string from, string to, string date, int duration)
+        public Result HolidayAndFlightSearcher(string from, string to, string date, int duration, bool findBest = true)
         {
             //destination and date are where the two intersect
             var foundHolidays = HolidaySearcher(to, date, duration);
@@ -135,7 +135,8 @@ namespace HolidaySearch
                     results.Add(r);
                 }
             }
-            return results[0];
+
+            return  findBest ? results.OrderBy(x => x.TotalPrice).First() : results[0];
         }
 
         private static string ConvertLocationToAirportCode(string location)

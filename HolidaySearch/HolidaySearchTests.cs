@@ -244,7 +244,7 @@ namespace HolidaySearch
         [TestMethod]
         public void ShouldFindHolidayAndFlightForSearchTerms()
         {
-            var foundHolidayAndFlight = hs.HolidayAndFlightSearcher("MAN", "PMI", "15/06/2023", 10);
+            var foundHolidayAndFlight = hs.HolidayAndFlightSearcher("MAN", "PMI", "15/06/2023", 10, false);
             var holiday = foundHolidayAndFlight.holiday;
             var flight = foundHolidayAndFlight.flight;
             Assert.AreEqual("Sol Katmandu Park & Resort", holiday.Name);
@@ -257,9 +257,30 @@ namespace HolidaySearch
         [TestMethod]
         public void ShouldFindResultAndCalculateTotalPrice()
         {
-            var foundHolidayAndFlight = hs.HolidayAndFlightSearcher("MAN", "PMI", "15/06/2023", 10);
+            var foundHolidayAndFlight = hs.HolidayAndFlightSearcher("MAN", "PMI", "15/06/2023", 10, false);
             var price = foundHolidayAndFlight.TotalPrice;
             Assert.AreEqual(770.0, price);
+        }
+
+        //return 'best' holiday!
+        [TestMethod]
+        public void ShouldFindBestHolidayAndFlightByPrice()
+        {
+            var result = hs.HolidayAndFlightSearcher("Manchester Airport(MAN)", "Malaga Airport(AGP)", "2023/07/01", 7);
+            var result2 = hs.HolidayAndFlightSearcher("Any London Airport", "Mallorca Airport(PMI)", "2023/06/15", 10);
+            var result3 = hs.HolidayAndFlightSearcher("Any Airport", "Gran Canaria Airport (LPA)", "2022/11/10", 14);
+            var holiday = result.holiday;
+            var flight = result.flight;
+            var holiday2 = result2.holiday;
+            var flight2 = result2.flight;
+            var holiday3 = result3.holiday;
+            var flight3 = result3.flight;
+            Assert.AreEqual(9, holiday.Id);
+            Assert.AreEqual(2, flight.Id);
+            Assert.AreEqual(5, holiday2.Id);
+            Assert.AreEqual(6, flight2.Id);
+            Assert.AreEqual(6, holiday3.Id);
+            Assert.AreEqual(7, flight3.Id);
         }
     }
 }
