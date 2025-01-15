@@ -134,9 +134,17 @@ namespace HolidaySearch
                     var r = new Result { holiday = holiday, flight = flight, TotalPrice = total };
                     results.Add(r);
                 }
+            
             }
 
-            return  findBest ? results.OrderBy(x => x.TotalPrice).First() : results[0];
+            if(results.Count > 0)
+            {
+                return findBest ? results.OrderBy(x => x.TotalPrice).First() : results[0];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private static string ConvertLocationToAirportCode(string location)

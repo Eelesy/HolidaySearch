@@ -275,5 +275,12 @@ namespace HolidaySearch
             Assert.AreEqual(expectedHolidayId, holiday.Id);
             Assert.AreEqual(expectedFlightId, flight.Id);
         }
+
+        [TestMethod]
+        public void ShouldReturnEmptyListIfNoHolidayFound()
+        {
+            var result = hs.HolidayAndFlightSearcher("Leek", "Wilmslow", "15/01/2025", 10);
+            Assert.IsNull(result);
+        }
     }
 }
