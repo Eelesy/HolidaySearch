@@ -126,6 +126,17 @@ namespace HolidaySearch
             Assert.AreEqual(4, foundFlight.Count);
         }
 
+        // negative test
+        [TestMethod]
+        public void ShouldReturnEmptyListForNoFlightsWithSearchTerm()
+        {
+            var flightFrom = hs.GetFlightsFrom("LEEK");
+            var flightsTo = hs.GetFlightsTo("WILMSLOW");
+            var flightOn = hs.GetFlightsOnDepartureDate("15/01/2025");
+            Assert.AreEqual(0, flightFrom.Count());
+            Assert.AreEqual(0, flightsTo.Count());
+            Assert.AreEqual(0, flightOn.Count());
+        }
 
     }
 }
