@@ -245,8 +245,8 @@ namespace HolidaySearch
         public void ShouldFindHolidayAndFlightForSearchTerms()
         {
             var foundHolidayAndFlight = hs.HolidayAndFlightSearcher("MAN", "PMI", "15/06/2023", 10);
-            var holiday = foundHolidayAndFlight.Item1;
-            var flight = foundHolidayAndFlight.Item2;
+            var holiday = foundHolidayAndFlight.holiday;
+            var flight = foundHolidayAndFlight.flight;
             Assert.AreEqual("Sol Katmandu Park & Resort", holiday.Name);
             Assert.AreEqual(60, holiday.Price_Per_Night);
             Assert.AreEqual("Trans American Airlines", flight.Airline);
